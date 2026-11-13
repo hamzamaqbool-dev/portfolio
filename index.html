@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hamza Maqbool | Power BI Dashboards, Excel Automation &amp; Business Apps</title>
+<meta name="description" content="Independent Power BI and Power Platform developer in Lahore. I build dashboards, automate repetitive Excel and file-based work, and develop business applications with Power Apps and SharePoint, so businesses save time, manage data and make better decisions." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* Layout: left-aligned editorial grid. Narrow heading column beside wide content column.
+   One memorable moment: the hero data check. Everything else stays quiet. */
+:root{
+  --bg:#F2F5F3;
+  --surface:#FFFFFF;
+  --soft:#E6ECE9;
+  --ink:#10201B;
+  --muted:#55655F;
+  --line:#D2DBD7;
+  --accent:#F2C811;
+  --accent-ink:#10201B;
+  --ok:#1B7F57;
+  --warn:#C2410C;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Instrument Sans","Segoe UI",system-ui,sans-serif;
+  --data:"IBM Plex Mono",ui-monospace,"SFMono-Regular",Menlo,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0D1411;--surface:#141D19;--soft:#1B2722;--ink:#E8F0EC;--muted:#93A59D;--line:#26332E;
+    --accent:#F2C811;--accent-ink:#10201B;--ok:#4CC38A;--warn:#FF8A5B;color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0D1411;--surface:#141D19;--soft:#1B2722;--ink:#E8F0EC;--muted:#93A59D;--line:#26332E;
+  --accent:#F2C811;--accent-ink:#10201B;--ok:#4CC38A;--warn:#FF8A5B;color-scheme:dark;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+img{max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-family:var(--display);margin:0;text-wrap:balance;font-weight:700;letter-spacing:-.02em}
+p{margin:0}
+ul,ol,dl,dd{margin:0;padding:0}
+li{list-style:none}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:4px}
+
+.wrap{max-width:1180px;margin-inline:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.sec{padding-block:clamp(56px,8vw,104px);border-top:1px solid var(--line)}
+.split{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.7fr);gap:clamp(24px,5vw,80px);align-items:start}
+.split > header{display:grid;gap:14px;position:sticky;top:96px}
+.split h2{font-size:clamp(1.9rem,3.2vw,2.7rem);line-height:1.08}
+.lead{color:var(--muted);max-width:34ch}
+.split-stack{grid-template-columns:minmax(0,1fr)}
+.split-stack > header{position:static;max-width:560px}
+.split-stack .lead{max-width:48ch}
+
+/* Header */
+.site-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:20px;min-height:68px}
+.brand{font:700 1.15rem var(--display);text-decoration:none;letter-spacing:-.01em;margin-right:auto;display:flex;align-items:center;gap:10px}
+.brand i{width:30px;height:30px;border-radius:8px;background:var(--accent);color:var(--accent-ink);display:grid;place-items:center;font:800 .8rem var(--display);font-style:normal}
+.nav{display:flex;gap:26px;font-size:.95rem}
+.nav a{text-decoration:none;color:var(--muted)}
+.nav a:hover{color:var(--ink)}
+.icon-btn{appearance:none;border:1px solid var(--line);background:transparent;color:var(--ink);width:40px;height:40px;border-radius:10px;font-size:1.05rem;cursor:pointer;display:grid;place-items:center}
+.icon-btn:hover{background:var(--soft)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border-radius:10px;font:600 .98rem var(--body);text-decoration:none;border:1px solid transparent;cursor:pointer;transition:transform .15s,background .15s}
+.btn-primary{background:var(--accent);color:var(--accent-ink)}
+.btn-primary:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.btn-line{border-color:var(--ink);background:transparent;color:var(--ink)}
+.btn-line:hover{background:var(--soft)}
+.btn-sm{min-height:40px;padding:0 16px;font-size:.92rem}
+
+/* Hero */
+.hero{padding-block:clamp(40px,6vw,80px) 0;border-top:0}
+.hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(28px,5vw,72px);align-items:center}
+.status{display:inline-flex;align-items:center;gap:10px;font-size:.92rem;color:var(--muted);margin-bottom:22px}
+.status i{width:9px;height:9px;border-radius:50%;background:var(--ok)}
+.hero h1{font-size:clamp(2.5rem,5.4vw,4.7rem);line-height:1.01;letter-spacing:-.035em;font-weight:800;max-width:13ch}
+.hero .intro{margin-top:24px;font-size:1.15rem;color:var(--muted);max-width:46ch}
+.hero .cta{margin-top:30px;display:flex;gap:12px;flex-wrap:wrap}
+
+.facts{margin-top:clamp(44px,6vw,76px);display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--ink)}
+.facts > div{padding:20px 20px 28px 0}
+.facts > div + div{padding-left:20px;border-left:1px solid var(--line)}
+.facts dt{font:700 clamp(1.7rem,3vw,2.4rem)/1 var(--display);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.facts dd{margin-top:8px;color:var(--muted);font-size:.93rem;line-height:1.45;max-width:26ch}
+.fine{margin-top:4px;font-size:.82rem;color:var(--muted);max-width:70ch}
+
+/* Data check widget (also reused for case-study visuals) */
+.recon{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 0 var(--line),0 24px 48px -32px rgba(16,32,27,.35);margin:0}
+.recon-top{display:flex;justify-content:space-between;gap:12px;padding:14px 18px;border-bottom:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+.recon-top b{color:var(--ink);font-weight:600}
+.recon-head,.row{display:grid;grid-template-columns:minmax(0,1fr) 7.2ch 7.2ch 26px;gap:10px;align-items:center;padding:0 18px}
+.recon-head{padding-block:10px;font-size:.8rem;color:var(--muted);border-bottom:1px solid var(--line);background:var(--soft)}
+.recon-head span:nth-child(2),.recon-head span:nth-child(3){text-align:right;white-space:nowrap}
+.rows{display:block}
+.row{min-height:50px;border-bottom:1px solid var(--line);font-family:var(--data);font-size:.92rem;transition:background .25s}
+.row .k{font-family:var(--body);font-weight:500;font-size:.98rem}
+.row .v{text-align:right;font-variant-numeric:tabular-nums;transition:color .25s,opacity .25s}
+.row .st{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:600 .78rem var(--data);justify-self:end}
+.row[data-total="true"]{font-weight:500;border-bottom:0}
+.row[data-total="true"] .k{font-weight:700}
+.row[data-state="wait"] .v,.row[data-state="wait"] .k{opacity:.38}
+.row[data-state="wait"] .st::before{content:"·";color:var(--muted)}
+.row[data-state="check"] .st{border:2px solid var(--line);border-top-color:var(--ink);animation:spin .7s linear infinite}
+.row[data-state="ok"] .st{background:var(--ok);color:var(--surface)}
+.row[data-state="ok"] .st::before{content:"✓"}
+.row[data-state="flag"]{background:color-mix(in srgb,var(--warn) 10%,transparent)}
+.row[data-state="flag"] .r{color:var(--warn);font-weight:600}
+.row[data-state="flag"] .st{background:var(--warn);color:var(--surface)}
+.row[data-state="flag"] .st::before{content:"!"}
+.recon-foot{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;border-top:1px solid var(--line);background:var(--soft)}
+.recon-foot p{font-size:.9rem;min-width:0;flex:1 1 220px}
+.recon-note{padding:10px 18px;font-size:.78rem;color:var(--muted);border-top:1px solid var(--line)}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Services */
+.pairs{border-top:1px solid var(--ink)}
+.pair{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:clamp(16px,3vw,40px);padding:28px 0;border-bottom:1px solid var(--line)}
+.pair .when{color:var(--muted);font-size:1.02rem;max-width:30ch}
+.pair h3{font-size:1.35rem;line-height:1.2;margin-bottom:8px}
+.pair .lbl{font:700 1.15rem/1.3 var(--display);letter-spacing:-.01em}
+.pair p{color:var(--muted);max-width:52ch}
+.pair p + p,.pair .tags{margin-top:14px}
+.pair .when b{display:block;color:var(--ink);font-size:.8rem;font-weight:600;margin-bottom:6px}
+.pair .btn{margin-top:18px}
+.svc-cta{display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;padding-top:28px}
+.svc-cta p{color:var(--muted);max-width:40ch}
+.tags{display:flex;flex-wrap:wrap;gap:8px;font-size:.84rem;color:var(--muted)}
+.tags span{border:1px solid var(--line);border-radius:999px;padding:3px 12px}
+
+/* Project cards */
+.project-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:clamp(22px,3vw,34px);min-width:0;display:flex;flex-direction:column;gap:16px}
+.panel h3{font-size:clamp(1.3rem,2vw,1.6rem);line-height:1.15}
+.panel p{color:var(--muted);flex:1}
+.panel .btn{align-self:flex-start}
+.flow{display:flex;flex-wrap:wrap;gap:8px 6px;align-items:center}
+.flow li{background:var(--soft);border-radius:8px;padding:7px 12px;font-size:.88rem;font-weight:500}
+.flow li + li::before{content:"→";margin-right:10px;color:var(--muted)}
+.flow li:last-child{background:var(--accent);color:var(--accent-ink)}
+
+/* Case study views */
+.case{padding-block:clamp(32px,5vw,64px) clamp(56px,8vw,104px)}
+.back{display:inline-block;color:var(--muted);text-decoration:none;font-size:.95rem;margin-bottom:28px}
+.back:hover{color:var(--ink)}
+.case-head{display:grid;gap:18px;margin-bottom:clamp(28px,4vw,48px)}
+.case-head h1{font-size:clamp(2rem,4.4vw,3.4rem);line-height:1.04;letter-spacing:-.03em;font-weight:800;max-width:20ch}
+.case-head .lead{max-width:56ch;font-size:1.12rem}
+.bul{display:grid;gap:10px}
+.bul li{padding-left:20px;position:relative;max-width:60ch}
+.bul li::before{content:"";position:absolute;left:0;top:.72em;width:8px;height:2px;background:var(--ink)}
+.pair .steps{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 24px}
+.visuals{display:grid;gap:16px}
+.visuals.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+.visuals .recon-note{border-top:0}
+.mock-kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-bottom:1px solid var(--line)}
+.mock-kpis div{padding:14px 18px}
+.mock-kpis div + div{border-left:1px solid var(--line)}
+.mock-kpis b{display:block;font:700 1.5rem/1.1 var(--display);letter-spacing:-.02em}
+.mock-kpis span{font-size:.8rem;color:var(--muted)}
+.mock-chart{display:block;width:100%;height:auto;padding:12px 12px 4px}
+.mock-chart text{font:500 11px var(--body);fill:var(--muted)}
+.mock-chart .val{fill:var(--ink)}
+.case-nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:clamp(32px,4vw,48px)}
+
+/* Process, about, FAQ */
+.job{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1.3fr);gap:clamp(16px,3vw,40px);padding-bottom:36px;border-bottom:1px solid var(--line)}
+.job h3{font-size:1.35rem;line-height:1.2}
+.job .meta{color:var(--muted);font-size:.95rem;margin-top:6px}
+.bg-grid{display:grid;gap:44px}
+.toolkit{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px}
+.toolkit h3{font-size:1.05rem;margin-bottom:10px}
+.toolkit p{color:var(--muted);font-size:.98rem}
+.cv-row{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+.cv-row p{color:var(--muted);font-size:.95rem;max-width:44ch}
+
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;counter-reset:step}
+.steps li{border-top:2px solid var(--ink);padding-top:16px;counter-increment:step}
+.steps li::before{content:counter(step);display:block;font:700 2rem/1 var(--display);color:var(--muted);margin-bottom:14px}
+.steps h3{font-size:1.15rem;margin-bottom:6px}
+.steps p{color:var(--muted);font-size:.96rem}
+
+.faq{border-top:1px solid var(--ink)}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:22px 0;cursor:pointer;font:600 1.15rem/1.3 var(--display);list-style:none}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font:400 1.6rem/1 var(--body);transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{padding:0 0 24px;color:var(--muted);max-width:62ch}
+
+/* Contact */
+.contact{background:var(--ink);color:var(--bg);padding-block:clamp(64px,9vw,120px);border-top:0}
+.contact h2{font-size:clamp(2rem,4.6vw,3.8rem);line-height:1.04;letter-spacing:-.03em;font-weight:800;max-width:17ch}
+.contact .sub{margin-top:20px;max-width:50ch;color:color-mix(in srgb,var(--bg) 75%,transparent);font-size:1.1rem}
+.mail{margin-top:34px;display:flex;flex-wrap:wrap;gap:12px;align-items:center}
+.mail code{font:500 clamp(.95rem,2vw,1.2rem) var(--data);padding:12px 16px;border:1px dashed color-mix(in srgb,var(--bg) 45%,transparent);border-radius:10px;overflow-wrap:anywhere;user-select:all}
+.contact .btn-line{border-color:var(--bg);color:var(--bg)}
+.contact .btn-line:hover{background:color-mix(in srgb,var(--bg) 14%,transparent)}
+.contact :focus-visible{outline-color:var(--bg)}
+.links{margin-top:26px;display:flex;gap:22px;flex-wrap:wrap;font-size:.98rem}
+.site-foot{padding-block:28px;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;color:var(--muted);font-size:.9rem}
+
+@media (max-width:960px){
+  .split,.job{grid-template-columns:minmax(0,1fr)}
+  .split > header{position:static}
+  .hero-grid{grid-template-columns:minmax(0,1fr)}
+  .facts{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .facts > div:nth-child(3){padding-left:0;border-left:0}
+  .facts > div:nth-child(n+3){border-top:1px solid var(--line)}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .toolkit{grid-template-columns:minmax(0,1fr)}
+  .project-grid,.visuals.two{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:720px){
+  .nav{display:none}
+  .pair{grid-template-columns:minmax(0,1fr);gap:10px}
+}
+@media (max-width:420px){
+  .steps,.pair .steps{grid-template-columns:minmax(0,1fr)}
+  .recon-head,.row{grid-template-columns:minmax(0,1fr) 6.4ch 6.4ch 24px;gap:6px;padding:0 12px}
+  .recon-top,.recon-foot,.recon-note{padding-inline:12px}
+  .mock-kpis div{padding:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+</style>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hamza Maqbool | Power BI Dashboards, Excel Automation &amp; Business Apps">
+<meta property="og:description" content="Independent Power BI and Power Platform developer in Lahore. I build dashboards, automate repetitive Excel and file-based work, and develop business applications with Power Apps and SharePoint, so businesses save time, manage data and make better decisions.">
+<meta name="robots" content="index, follow">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "Person", "name": "Hamza Maqbool", "jobTitle": "Independent Power BI and Power Platform Developer", "description": "I build dashboards, automate repetitive tasks and develop business applications that help businesses save time, manage data and make better decisions.", "address": {"@type": "PostalAddress", "addressLocality": "Lahore", "addressCountry": "PK"}, "knowsAbout": ["Power BI", "Power Platform", "Power Apps", "Power Automate", "SharePoint", "KNIME", "Excel automation", "Data analytics", "SQL", "Python"], "sameAs": ["https://www.linkedin.com/in/hamza-maqbool-213bda"]}</script>
+</head>
+<body>
+<header class="site-header">
+  <div class="wrap bar">
+    <a class="brand" href="#home" aria-label="Hamza Maqbool, home"><i>HM</i>Hamza Maqbool</a>
+    <nav class="nav" aria-label="Main">
+      <a href="#home">Home</a>
+      <a href="#services">Services</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+    </nav>
+    <button class="icon-btn" id="theme" type="button" aria-label="Switch between light and dark theme">◐</button>
+    <a class="btn btn-primary btn-sm" href="#contact">Contact</a>
+  </div>
+</header>
+
+<main>
+<div id="home-view">
+
+  <section class="hero wrap" id="home">
+    <div class="hero-grid">
+      <div>
+        <p class="status"><i></i>Taking on freelance projects</p>
+        <h1>I turn manual work into smarter business solutions.</h1>
+        <p class="intro">I'm Hamza Maqbool, an independent Power BI and Power Platform developer. I build dashboards, automate repetitive tasks and develop business applications that help businesses save time, manage data and make better decisions.</p>
+        <div class="tags" style="margin-top:20px" aria-label="Tools I work with"><span>Power BI</span><span>Power Apps</span><span>Power Automate</span><span>SharePoint</span><span>Excel</span><span>SQL</span><span>Python</span><span>KNIME</span></div>
+        <div class="cta">
+          <a class="btn btn-primary" href="#projects">View Projects</a>
+          <a class="btn btn-line" href="#contact">Discuss a Project</a>
+        </div>
+      </div>
+
+      <figure class="recon" id="recon" aria-label="Animated example of an automated number check between source data and a Power BI report">
+        <div class="recon-top"><b>Data check</b><span>Source data vs Power BI report</span></div>
+        <div class="recon-head" aria-hidden="true"><span>Region</span><span>Source</span><span>Report</span><span></span></div>
+        <ul class="rows" id="rows">
+          <li class="row" data-state="ok" data-total="false" data-final="12,480"><span class="k">North</span><span class="v s">12,480</span><span class="v r">12,480</span><span class="st" aria-hidden="true"></span></li>
+          <li class="row" data-state="ok" data-total="false" data-final="9,315"><span class="k">South</span><span class="v s">9,315</span><span class="v r">9,315</span><span class="st" aria-hidden="true"></span></li>
+          <li class="row" data-state="ok" data-total="false" data-final="7,742" data-bad="7,724"><span class="k">East</span><span class="v s">7,742</span><span class="v r">7,742</span><span class="st" aria-hidden="true"></span></li>
+          <li class="row" data-state="ok" data-total="false" data-final="11,060"><span class="k">West</span><span class="v s">11,060</span><span class="v r">11,060</span><span class="st" aria-hidden="true"></span></li>
+          <li class="row" data-state="ok" data-total="false" data-final="18,236"><span class="k">Online</span><span class="v s">18,236</span><span class="v r">18,236</span><span class="st" aria-hidden="true"></span></li>
+          <li class="row" data-state="ok" data-total="true" data-final="58,833" data-bad="58,815"><span class="k">Total</span><span class="v s">58,833</span><span class="v r">58,833</span><span class="st" aria-hidden="true"></span></li>
+        </ul>
+        <div class="recon-foot">
+          <p id="recon-msg" role="status">Rechecked after the correction: 6 of 6 rows match.</p>
+          <button class="btn btn-line btn-sm" id="replay" type="button">Run the check again</button>
+        </div>
+        <figcaption class="recon-note">Illustrative sample figures, not client data. In this example the report first shows East as 7,724 instead of 7,742.</figcaption>
+      </figure>
+    </div>
+
+    <dl class="facts">
+      <div><dt>5+ years</dt><dd>of experience developing Power BI reports, automated workflows, and business applications</dd></div>
+      <div><dt>Interactive</dt><dd>business apps built with Power Apps to streamline processes and improve data management</dd></div>
+      <div><dt>Millions</dt><dd>of records carefully checked against Power BI figures to confirm they match the original source</dd></div>
+      <div><dt>Automated</dt><dd>Excel automation using Power Automate to reduce manual tasks and improve efficiency</dd></div>
+    </dl>
+    <!-- <p class="fine">These numbers come from my own project work.</p> -->
+  </section>
+
+  <section class="sec" id="services">
+    <div class="wrap split">
+      <header>
+        <h2>Services</h2>
+        <p class="lead">Three core services, plus advanced data work when a job needs it.</p>
+      </header>
+      <div class="pairs">
+        <div class="pair"><p class="when"><b>Sound familiar?</b>Your numbers are spread across Excel files, databases and SharePoint, so getting one clear picture is slow.</p><div><h3>Power BI Dashboards</h3><p>I bring your scattered data into one dashboard, so you can see how the business is doing without building reports by hand.</p><p><b>What you get:</b> one clear view, a file built to be maintained, and a short guide for your team.</p><div class="tags"><span>Power BI</span><span>SQL</span><span>SharePoint</span><span>Excel</span></div><a class="btn btn-line btn-sm" href="#case-kpi-reporting">See an example &rarr;</a></div></div>
+        <div class="pair"><p class="when"><b>Sound familiar?</b>Someone on your team repeats the same file handling, cleaning and checking every week.</p><div><h3>Excel &amp; Process Automation</h3><p>I turn the repetitive steps into an automated workflow. Files are processed with your business rules, checked and sent to the people who need them.</p><p><b>What you get:</b> less routine work, and the same rules applied the same way every time.</p><div class="tags"><span>Power Automate</span><span>Excel</span><span>SharePoint</span></div><a class="btn btn-line btn-sm" href="#case-excel-automation">See an example &rarr;</a></div></div>
+        <div class="pair"><p class="when"><b>Sound familiar?</b>Records live in spreadsheets that several people edit, and it is hard to tell which copy is current.</p><div><h3>Internal Business Apps</h3><p>I build simple apps in Power Apps, backed by SharePoint, to manage records and data, with access based on each person's role.</p><p><b>What you get:</b> one controlled place for your records instead of spreadsheets passed around.</p><div class="tags"><span>Power Apps</span><span>SharePoint</span><span>Power Automate</span></div><a class="btn btn-line btn-sm" href="#case-token-system">See an example &rarr;</a></div></div>
+        <div class="pair"><p class="when"><b>For harder jobs</b>Your data is large, messy or rule-heavy, or you need proof that reports match the source.</p><div><h3>Advanced Data Processing</h3><p>I use KNIME, SQL and Python to clean and transform data with many rules, and to compare report figures against source files.</p><p><b>What you get:</b> a list of every mismatch, and a process you can re-run on the next file.</p><div class="tags"><span>KNIME</span><span>SQL</span><span>Python</span><span>Power BI</span></div><a class="btn btn-line btn-sm" href="#case-knime-reconciliation">See an example &rarr;</a></div></div>
+        <div class="svc-cta"><p>Not sure which one fits? Describe the problem and I will tell you.</p><a class="btn btn-primary" href="#contact">Discuss a Project</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="projects">
+    <div class="wrap split split-stack">
+      <header>
+        <h2>Featured projects and case studies</h2>
+        <p class="lead">Four solutions I have built and delivered. Each card says what it was for and what I did. Organisation and data details are kept private.</p>
+      </header>
+      <div class="project-grid">
+        <article class="panel">
+          <h3>Power BI KPI Reporting</h3>
+          <p>Key figures were spread across databases, SharePoint and Excel files. These dashboards and KPI reports bring them together so decisions can be made from one view.<span style="display:block;margin-top:12px"><b>My part:</b> I gathered the requirements from stakeholders, connected the data and built the dashboards and reports.</span></p>
+          <div class="tags"><span>Power BI</span><span>SQL Server</span><span>SharePoint</span><span>Excel</span></div>
+          <a class="btn btn-line btn-sm" href="#case-kpi-reporting">View Case Study</a>
+        </article>
+        <article class="panel">
+          <h3>Token Management System</h3>
+          <p>Token records arrived in Excel files and had to be assigned to the right people and tracked. This system loads the files automatically, lets users manage tokens in an app according to their role, and shows usage in a dashboard.<span style="display:block;margin-top:12px"><b>My part:</b> I built all three parts and connected them so the data stays in sync.</span></p>
+          <div class="tags"><span>Power Automate</span><span>SharePoint</span><span>Power Apps</span><span>Power BI</span></div>
+          <a class="btn btn-line btn-sm" href="#case-token-system">View Case Study</a>
+        </article>
+        <article class="panel">
+          <h3>Rule-Based Excel Automation</h3>
+          <p>Different types of Excel file each needed their own clean-up. One automated workflow recognises the file type from its name, applies the right one of 13 predefined clean-ups, saves the result in SharePoint and emails the user.<span style="display:block;margin-top:12px"><b>My part:</b> I built the workflow from start to finish, including the file detection, the Excel rules, the folder structure and the email notices.</span></p>
+          <div class="tags"><span>Power Automate</span><span>Excel</span><span>SharePoint</span><span>Outlook</span></div>
+          <a class="btn btn-line btn-sm" href="#case-excel-automation">View Case Study</a>
+        </article>
+        <article class="panel">
+          <h3>KNIME Data Reconciliation &amp; Excel Automation</h3>
+          <p>Power BI figures had to be confirmed against source data from a web portal, across files with millions of records. An automated workflow now applies predefined rules, compares both sides and lists every mismatch, so the check no longer has to be done by hand.<span style="display:block;margin-top:12px"><b>My part:</b> I carried out the validation and built the workflow, including its rule-based logic.</span></p>
+          <div class="tags"><span>KNIME</span><span>Power BI</span><span>Excel</span></div>
+          <a class="btn btn-line btn-sm" href="#case-knime-reconciliation">View Case Study</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="process">
+    <div class="wrap split">
+      <header>
+        <h2>How I work</h2>
+        <p class="lead">From the first message to handover.</p>
+      </header>
+      <ol class="steps">
+        <li><h3>Scope</h3><p>You describe the problem and share a sample file, even if you are not sure which tool is right. I confirm what I will deliver, the timeline and the price in writing.</p></li>
+        <li><h3>Build</h3><p>I choose the tools that fit, connect them and set up your business rules using your own data.</p></li>
+        <li><h3>Test</h3><p>I check the output against your source data and fix any differences before you review it. AI tools speed up routine parts of my work, but the checking is mine.</p></li>
+        <li><h3>Handover</h3><p>You receive the working files, short notes and a walkthrough.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="sec" id="about">
+    <div class="wrap split">
+      <header>
+        <h2>About</h2>
+        <p class="lead">An independent developer who helps businesses fix data, reporting and workflow problems.</p>
+      </header>
+      <div class="bg-grid">
+        <div class="job">
+          <div><h3>How I approach the work</h3><p class="meta">Independent, Lahore, Pakistan</p></div>
+          <ul class="bul">
+            <li>I start with the business problem, then choose the tool that fits. That might be Power BI, Power Apps, Power Automate, SharePoint, Excel, SQL, Python or KNIME, often several together.</li>
+            <li>I make business data easier to understand, with dashboards that show the numbers people actually need.</li>
+            <li>I reduce repetitive manual work with automated workflows that apply your business rules and notify the right people.</li>
+            <li>I build practical applications that make it easier to manage records and day-to-day operations.</li>
+            <li>I use AI tools to speed up routine parts of the work. Understanding what you need, designing the solution, connecting the tools, applying the business rules and checking that the output is correct stay with me.</li>
+          </ul>
+        </div>
+
+        <div class="toolkit">
+          <div><h3>Make data easier to understand</h3><p>Power BI, Excel and SQL. Dashboards, KPI reports and clear figures from scattered data.</p></div>
+          <div><h3>Reduce repetitive work</h3><p>Power Automate, Excel and SharePoint. Workflows that process files, apply rules and send out the results.</p></div>
+          <div><h3>Run operations in one place</h3><p>Power Apps and SharePoint. Internal apps to manage records, with access based on role.</p></div>
+        </div>
+
+        <div class="cv-row">
+          <p>For complex jobs: KNIME, SQL and Python for rule-heavy processing, large files and checking that figures match the source.</p>
+          <p>BS Computer Science, NCBA&amp;E, 2017 to 2021. Based in Lahore (UTC+5), one to two hours ahead of the UAE and Saudi Arabia, and available for remote projects. I am also open to full-time roles, including in the UAE and Saudi Arabia.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq">
+    <div class="wrap split">
+      <header>
+        <h2>Frequently asked questions</h2>
+      </header>
+      <div class="faq">
+        <details><summary>I am not sure which tool or solution I need. Can I still get in touch?</summary><p>Yes, that is a normal way to start. Describe what is slow, repetitive or hard to see in your current process, and I will suggest what would help. You do not need to know the technology.</p></details>
+        <details><summary>How do you scope a project?</summary><p>I ask for a description of the problem, a sample file or screenshot, and who will use the result. I then confirm deliverables, timeline and price in writing before starting.</p></details>
+        <details><summary>What data access do you need?</summary><p>A sample export is usually enough to start. If the work needs a live connection, I need read access to the sources involved. Where possible I work from anonymised files.</p></details>
+        <details><summary>How is the work delivered?</summary><p>In stages. I share progress along the way, test against your data, and deliver the finished Power BI report, Excel files, flows or app.</p></details>
+        <details><summary>What do I get at handover?</summary><p>The working solution, short written notes and a walkthrough, so your team can use and maintain it.</p></details>
+        <details><summary>Do you use AI tools?</summary><p>Yes, as support for routine parts of the work. I do not build AI models or AI agents. What you are paying for is understanding your requirements, designing the right solution, connecting the tools and checking that the result is accurate and works reliably.</p></details>
+        <details><summary>How do you handle confidential data?</summary><p>I use only the data the task needs and keep it out of public places. If you ask, I will sign an NDA before you share anything.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec contact" id="contact">
+    <div class="wrap">
+      <h2>Let's talk about your project</h2>
+      <p class="sub">Not sure what you need? That is fine. Describe the problem in a few lines and, if you can, attach a sample file. I will reply with whether I can help and what the work would involve.</p>
+      <div class="mail">
+        <a class="btn btn-primary" href="mailto:hamzamaqbool213@gmail.com?subject=Project%20inquiry">Send a project inquiry</a>
+        <code id="mail">hamzamaqbool213@gmail.com</code>
+        <button class="btn btn-line" id="copy" type="button">Copy email</button>
+      </div>
+      <p class="links"><a href="https://www.linkedin.com/in/hamza-maqbool-213bda" target="_blank" rel="noopener noreferrer">LinkedIn profile</a></p>
+    </div>
+  </section>
+
+</div>
+
+<article class="case wrap" id="case-kpi-reporting" data-title="Power BI KPI Reporting Case Study" hidden><a class="back" href="#projects">&larr; All projects</a><header class="case-head"><h1>Power BI KPI Reporting</h1><p class="lead">Dashboards and KPI reports that bring operational data from three different sources into one view.</p><div class="tags"><span>Power BI</span><span>SQL Server</span><span>SharePoint</span><span>Excel</span></div></header><div class="pairs"><div class="pair"><h2 class="lbl">Project Overview</h2><div><p>I built Power BI dashboards and KPI reports for operational reporting. The data came from SQL Server, SharePoint and Excel, and the reports were used to support decisions.</p></div></div><div class="pair"><h2 class="lbl">Business Challenge</h2><div><p>The figures people needed were spread across three kinds of source. Each had to be brought into one reporting model before any KPI could be shown.</p></div></div><div class="pair"><h2 class="lbl">My Contribution</h2><div><p>Power BI developer and analyst. I gathered the requirements from stakeholders, connected the data sources, and built and delivered the dashboards and KPI reports end to end.</p></div></div><div class="pair"><h2 class="lbl">Solution</h2><div><ul class="bul"><li>Agree the KPIs and the views stakeholders need.</li><li>Connect SQL Server, SharePoint and Excel as data sources.</li><li>Shape the data into a model suited to reporting.</li><li>Build the dashboards and KPI reports in Power BI.</li></ul></div></div><div class="pair"><h2 class="lbl">How It Works</h2><div><ol class="steps"><li><h3>Sources</h3><p>SQL Server, SharePoint and Excel are connected to Power BI.</p></li><li><h3>Model</h3><p>The data is prepared for reporting.</p></li><li><h3>Dashboards</h3><p>KPI and operational views are built on the model.</p></li><li><h3>Reports</h3><p>Stakeholders use the dashboards and KPI reports to support decisions.</p></li></ol></div></div><div class="pair"><h2 class="lbl">Technologies Used</h2><div><div class="tags"><span>Power BI</span><span>SQL Server</span><span>SharePoint</span><span>Excel</span></div></div></div><div class="pair"><h2 class="lbl">Results</h2><div><p>Stakeholders received Power BI dashboards and KPI reports built on their operational data. I have not published figures for this project.</p></div></div><div class="pair"><h2 class="lbl">Project Visuals</h2><div><figure class="recon"><div class="recon-top"><b>Operations overview</b><span>Sample data</span></div><div class="mock-kpis"><div><b>71</b><span>Orders this week</span></div><div><b>63%</b><span>On-time rate</span></div><div><b>4</b><span>Open issues</span></div></div><svg class="mock-chart" viewBox="0 0 480 146" role="img" aria-label="Sample bar chart of weekly orders"><line x1="20" y1="120" x2="460" y2="120" stroke="var(--line)" stroke-width="1"/><rect x="30" y="65.4" width="44" height="54.6" rx="3" fill="var(--ink)" opacity=".82"/><text class="val" x="52" y="59.4" text-anchor="middle">42</text><text x="52" y="138" text-anchor="middle">W1</text><rect x="102" y="48.5" width="44" height="71.5" rx="3" fill="var(--ink)" opacity=".82"/><text class="val" x="124" y="42.5" text-anchor="middle">55</text><text x="124" y="138" text-anchor="middle">W2</text><rect x="174" y="57.6" width="44" height="62.4" rx="3" fill="var(--ink)" opacity=".82"/><text class="val" x="196" y="51.6" text-anchor="middle">48</text><text x="196" y="138" text-anchor="middle">W3</text><rect x="246" y="38.1" width="44" height="81.9" rx="3" fill="var(--ink)" opacity=".82"/><text class="val" x="268" y="32.1" text-anchor="middle">63</text><text x="268" y="138" text-anchor="middle">W4</text><rect x="318" y="44.6" width="44" height="75.4" rx="3" fill="var(--ink)" opacity=".82"/><text class="val" x="340" y="38.6" text-anchor="middle">58</text><text x="340" y="138" text-anchor="middle">W5</text><rect x="390" y="27.7" width="44" height="92.3" rx="3" fill="var(--accent)" opacity="1"/><text class="val" x="412" y="21.7" text-anchor="middle">71</text><text x="412" y="138" text-anchor="middle">W6</text></svg><figcaption class="recon-note">Illustrative mockup with sample data. Not a client screenshot.</figcaption></figure></div></div></div><nav class="case-nav" aria-label="Case studies"><a class="btn btn-line btn-sm" href="#case-knime-reconciliation">&larr; KNIME Data Reconciliation &amp; Excel Automation</a><a class="btn btn-primary btn-sm" href="#contact">Discuss a similar project</a><a class="btn btn-line btn-sm" href="#case-token-system">Token Management System &rarr;</a></nav></article>
+<article class="case wrap" id="case-token-system" data-title="Token Management System Case Study" hidden><a class="back" href="#projects">&larr; All projects</a><header class="case-head"><h1>Token Management System</h1><p class="lead">A system that takes Excel files in, lets the right people manage the records and shows usage in a dashboard, all working from the same data.</p><div class="tags"><span>Power Automate</span><span>SharePoint</span><span>Power Apps</span><span>Power BI</span></div></header><div class="pairs"><div class="pair"><h2 class="lbl">Project Overview</h2><div><p>Token data arrives as Excel files. A Power Automate flow reads each uploaded file into SharePoint lists, a Power Apps canvas app is used to view and edit the tokens, and a Power BI dashboard shows distribution, usage trends and KPIs.</p></div></div><div class="pair"><h2 class="lbl">Business Challenge</h2><div><p>Token data had to be loaded from uploaded Excel files, assigned to people by role, edited only by the right users and monitored over time.</p></div></div><div class="pair"><h2 class="lbl">My Contribution</h2><div><p>I developed all three parts: the Power Automate import flow, the Power Apps canvas interface with role-based token assignment, and the Power BI dashboards. I also connected them so the data stays in sync through SharePoint.</p></div></div><div class="pair"><h2 class="lbl">Solution</h2><div><ul class="bul"><li>Flow: extract token data from each uploaded Excel file and write it to SharePoint lists.</li><li>App: a canvas interface to view, edit and manage token records.</li><li>Access: token assignment that depends on the user&#x27;s role.</li><li>Dashboard: Power BI reports on token distribution, usage trends and KPIs.</li><li>Integration: Power Apps, Power Automate and SharePoint kept in step through the shared lists.</li></ul></div></div><div class="pair"><h2 class="lbl">How It Works</h2><div><ol class="steps"><li><h3>Upload</h3><p>A token Excel file is uploaded.</p></li><li><h3>Import</h3><p>The flow reads the file and stores the tokens in SharePoint lists.</p></li><li><h3>Manage</h3><p>Users view, edit and assign tokens in the app, according to their role.</p></li><li><h3>Monitor</h3><p>Power BI shows distribution, usage trends and KPIs from the same data.</p></li></ol></div></div><div class="pair"><h2 class="lbl">Technologies Used</h2><div><div class="tags"><span>Power Automate</span><span>SharePoint lists</span><span>Power Apps (canvas)</span><span>Power BI</span><span>Excel</span></div></div></div><div class="pair"><h2 class="lbl">Results</h2><div><p>The system covers the whole path from an uploaded Excel file to a monitoring dashboard. I have not published usage or time-saving figures for it.</p></div></div><div class="pair"><h2 class="lbl">Project Visuals</h2><div><figure class="recon"><div class="recon-top"><b>Token manager</b><span>Sample data</span></div><div class="recon-head" aria-hidden="true"><span>Token</span><span>Assigned</span><span>Role</span><span></span></div><ul class="rows"><li class="row" data-state="ok" data-total="false"><span class="k">T-1001</span><span class="v s">Team A</span><span class="v r">Editor</span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="ok" data-total="false"><span class="k">T-1002</span><span class="v s">Team B</span><span class="v r">Viewer</span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="ok" data-total="false"><span class="k">T-1003</span><span class="v s">Team A</span><span class="v r">Viewer</span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="wait" data-total="true"><span class="k">T-1004</span><span class="v s">-</span><span class="v r">-</span><span class="st" aria-hidden="true"></span></li></ul><div class="recon-foot"><p>T-1004 has not been assigned yet.</p></div><figcaption class="recon-note">Illustrative mockup with sample data. Not a client screenshot.</figcaption></figure></div></div></div><nav class="case-nav" aria-label="Case studies"><a class="btn btn-line btn-sm" href="#case-kpi-reporting">&larr; Power BI KPI Reporting</a><a class="btn btn-primary btn-sm" href="#contact">Discuss a similar project</a><a class="btn btn-line btn-sm" href="#case-excel-automation">Rule-Based Excel Automation &rarr;</a></nav></article>
+<article class="case wrap" id="case-excel-automation" data-title="Rule-Based Excel Automation Case Study" hidden><a class="back" href="#projects">&larr; All projects</a><header class="case-head"><h1>Rule-Based Excel Automation</h1><p class="lead">One automated workflow that picks the right clean-up for each uploaded Excel file, based on its name.</p><div class="tags"><span>Power Automate</span><span>Excel</span><span>SharePoint</span><span>Outlook</span></div></header><div class="pairs"><div class="pair"><h2 class="lbl">Project Overview</h2><div><p>Uploaded Excel files come in several types. The flow reads the file name, decides which of 13 predefined transformations applies, runs it, files the output in SharePoint and emails the user a link or the file itself.</p></div></div><div class="pair"><h2 class="lbl">Business Challenge</h2><div><p>Each file type needed its own transformation. The results also had to be stored in an organised way and reach the people waiting for them.</p></div></div><div class="pair"><h2 class="lbl">My Contribution</h2><div><p>I built the flow from start to finish: the file-name detection, the Excel standardisation behind each transformation, the SharePoint folder structure and the email notifications.</p></div></div><div class="pair"><h2 class="lbl">Solution</h2><div><ul class="bul"><li>Define the 13 transformations and the file-name pattern that selects each one.</li><li>Detect the file type from the name when a file is uploaded.</li><li>Run the selected transformation to standardise the Excel data.</li><li>Save the processed file in a structured SharePoint folder.</li><li>Send an email with a link to the output, or the file attached.</li></ul></div></div><div class="pair"><h2 class="lbl">How It Works</h2><div><ol class="steps"><li><h3>Upload</h3><p>A file is uploaded to the watched location.</p></li><li><h3>Detect</h3><p>The flow reads the file name and identifies the file type.</p></li><li><h3>Transform</h3><p>The matching one of the 13 transformations is applied.</p></li><li><h3>Deliver</h3><p>The output is saved in SharePoint and the user gets an email.</p></li></ol></div></div><div class="pair"><h2 class="lbl">Technologies Used</h2><div><div class="tags"><span>Power Automate</span><span>Excel</span><span>SharePoint</span><span>Outlook email</span></div></div></div><div class="pair"><h2 class="lbl">Results</h2><div><p>Uploaded files go through the transformation for their type and arrive in SharePoint with a notification. I have not published time-saving figures for this flow.</p></div></div><div class="pair"><h2 class="lbl">Project Visuals</h2><div><div class="visuals two"><figure class="recon"><div class="recon-top"><b>Before</b><span>Uploaded file</span></div><div class="recon-head" aria-hidden="true"><span>Column</span><span>Value</span><span></span><span></span></div><ul class="rows"><li class="row" data-state="wait" data-total="false"><span class="k">cust nm</span><span class="v s">ABC Ltd</span><span class="v r"></span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="wait" data-total="false"><span class="k">amt</span><span class="v s">1200.5</span><span class="v r"></span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="wait" data-total="true"><span class="k">dt</span><span class="v s">3/9/26</span><span class="v r"></span><span class="st" aria-hidden="true"></span></li></ul><figcaption class="recon-note">Sample data.</figcaption></figure><figure class="recon"><div class="recon-top"><b>After</b><span>Transformed</span></div><div class="recon-head" aria-hidden="true"><span>Column</span><span>Value</span><span></span><span></span></div><ul class="rows"><li class="row" data-state="ok" data-total="false"><span class="k">Customer</span><span class="v s">ABC Ltd</span><span class="v r"></span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="ok" data-total="false"><span class="k">Amount</span><span class="v s">1200.50</span><span class="v r"></span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="ok" data-total="true"><span class="k">Date</span><span class="v s">03-Sep</span><span class="v r"></span><span class="st" aria-hidden="true"></span></li></ul><figcaption class="recon-note">Sample data.</figcaption></figure></div><p class="fine">Illustrative before and after example with made-up data. Not a client file.</p></div></div></div><nav class="case-nav" aria-label="Case studies"><a class="btn btn-line btn-sm" href="#case-token-system">&larr; Token Management System</a><a class="btn btn-primary btn-sm" href="#contact">Discuss a similar project</a><a class="btn btn-line btn-sm" href="#case-knime-reconciliation">KNIME Data Reconciliation &amp; Excel Automation &rarr;</a></nav></article>
+<article class="case wrap" id="case-knime-reconciliation" data-title="KNIME Data Reconciliation &amp; Excel Automation Case Study" hidden><a class="back" href="#projects">&larr; All projects</a><header class="case-head"><h1>KNIME Data Reconciliation &amp; Excel Automation</h1><p class="lead">An automated check that compares Power BI figures with source data from a web portal and lists every mismatch.</p><div class="tags"><span>KNIME</span><span>Power BI</span><span>Excel</span></div></header><div class="pairs"><div class="pair"><h2 class="lbl">Project Overview</h2><div><p>Source data was downloaded from a web portal and compared with figures from automatically refreshed Power BI reports. The files held millions of records. I built a KNIME workflow that applies predefined rules over several processing steps, compares the two sides and reports every difference.</p></div></div><div class="pair"><h2 class="lbl">Business Challenge</h2><div><p>Power BI figures had to be confirmed against the portal data. The files were large and the comparison depended on many rules, which made a figure-by-figure check by hand slow and easy to get wrong.</p></div></div><div class="pair"><h2 class="lbl">Previous Process</h2><div><p>The comparison was done by hand. Source data was downloaded from the portal and compared with the Power BI data to check accuracy and find mismatches.</p></div></div><div class="pair"><h2 class="lbl">My Contribution</h2><div><p>As the data analyst, I carried out the validation across multiple files with millions of records and built the KNIME workflow that automated it, including its rule-based logic and processing steps.</p></div></div><div class="pair"><h2 class="lbl">Solution</h2><div><ul class="bul"><li>Download the source data from the web portal and collect the matching Power BI report data.</li><li>Validate figures across multiple files with millions of records to confirm the report matches the source.</li><li>Break the comparison into processing steps in KNIME, with predefined rules controlling how the data is handled at each step.</li><li>Compare the figures from both sides and flag differences.</li><li>Output a list of mismatches for follow-up.</li></ul></div></div><div class="pair"><h2 class="lbl">How It Works</h2><div><ol class="steps"><li><h3>Load</h3><p>Source files and Power BI report data are read into the workflow.</p></li><li><h3>Apply rules</h3><p>Predefined rules process the data through a sequence of steps.</p></li><li><h3>Compare</h3><p>Figures from the two sides are matched against each other.</p></li><li><h3>Report</h3><p>Mismatches are listed so they can be investigated.</p></li></ol></div></div><div class="pair"><h2 class="lbl">Technologies Used</h2><div><div class="tags"><span>KNIME</span><span>Power BI</span><span>Excel</span><span>Web portal exports</span></div></div></div><div class="pair"><h2 class="lbl">Results</h2><div><p>The workflow runs the comparison and lists the mismatches, so the figure-by-figure check no longer has to be done by hand. I have not published measured time savings for it.</p></div></div><div class="pair"><h2 class="lbl">Project Visuals</h2><div><div class="visuals"><ol class="flow" aria-label="Illustrative workflow outline"><li>Read portal files</li><li>Read report data</li><li>Apply rules</li><li>Compare figures</li><li>List mismatches</li></ol><figure class="recon"><div class="recon-top"><b>Comparison output</b><span>Sample data</span></div><div class="recon-head" aria-hidden="true"><span>Batch</span><span>Portal</span><span>Report</span><span></span></div><ul class="rows"><li class="row" data-state="ok" data-total="false"><span class="k">Batch A</span><span class="v s">4,210</span><span class="v r">4,210</span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="flag" data-total="false"><span class="k">Batch B</span><span class="v s">3,875</span><span class="v r">3,857</span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="ok" data-total="false"><span class="k">Batch C</span><span class="v s">5,102</span><span class="v r">5,102</span><span class="st" aria-hidden="true"></span></li><li class="row" data-state="flag" data-total="true"><span class="k">Total</span><span class="v s">13,187</span><span class="v r">13,169</span><span class="st" aria-hidden="true"></span></li></ul><div class="recon-foot"><p>2 differences: Batch B (3,875 vs 3,857) and Total (18 apart).</p></div><figcaption class="recon-note">Illustrative mockup with sample data. Not a client screenshot.</figcaption></figure><p class="fine">Illustrative outline and output with made-up numbers. This is not a screenshot of the real KNIME workflow.</p></div></div></div></div><nav class="case-nav" aria-label="Case studies"><a class="btn btn-line btn-sm" href="#case-excel-automation">&larr; Rule-Based Excel Automation</a><a class="btn btn-primary btn-sm" href="#contact">Discuss a similar project</a><a class="btn btn-line btn-sm" href="#case-kpi-reporting">Power BI KPI Reporting &rarr;</a></nav></article>
+
+</main>
+
+<footer class="wrap site-foot">
+  <span>© <span id="year">2026</span> Hamza Maqbool</span>
+  <span>Power BI dashboards, automation and business apps. Lahore, Pakistan.</span>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var reduce=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* Theme toggle */
+  try{var saved=localStorage.getItem("hm-theme");if(saved==="light"||saved==="dark")root.setAttribute("data-theme",saved);}catch(e){}
+  document.getElementById("theme").addEventListener("click",function(){
+    var cur=root.getAttribute("data-theme")||(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");
+    var next=cur==="dark"?"light":"dark";
+    root.setAttribute("data-theme",next);
+    try{localStorage.setItem("hm-theme",next);}catch(e){}
+  });
+  document.getElementById("year").textContent=new Date().getFullYear();
+
+  /* Views: home page, or one case study chosen by the URL hash */
+  var homeView=document.getElementById("home-view");
+  var cases=[].slice.call(document.querySelectorAll(".case"));
+  var baseTitle=document.title;
+  function route(){
+    var id="";
+    try{id=decodeURIComponent(location.hash.slice(1));}catch(e){}
+    var target=id?document.getElementById(id):null;
+    var isCase=!!(target&&target.classList.contains("case"));
+    cases.forEach(function(c){c.hidden=!(isCase&&c===target);});
+    homeView.hidden=isCase;
+    if(isCase){
+      document.title=target.getAttribute("data-title")+" | Hamza Maqbool";
+      window.scrollTo(0,0);
+    }else{
+      document.title=baseTitle;
+      if(target){requestAnimationFrame(function(){target.scrollIntoView();});}
+      else if(!id||id==="top"){window.scrollTo(0,0);}
+    }
+  }
+  window.addEventListener("hashchange",route);
+  route();
+
+  /* Copy email: Clipboard API first, then a textarea fallback. "Copied" is shown only after a confirmed copy. */
+  var copy=document.getElementById("copy"),mail=document.getElementById("mail"),copyTimer=null;
+  function selectMail(){
+    try{var r=document.createRange();r.selectNodeContents(mail);var sel=window.getSelection();sel.removeAllRanges();sel.addRange(r);}catch(e){}
+  }
+  function legacyCopy(text){
+    var ta=document.createElement("textarea");
+    ta.value=text;ta.setAttribute("readonly","");
+    ta.style.cssText="position:fixed;top:0;left:0;opacity:0;pointer-events:none";
+    document.body.appendChild(ta);
+    ta.focus();ta.select();ta.setSelectionRange(0,text.length);
+    var ok=false;
+    try{ok=document.execCommand("copy");}catch(e){ok=false;}
+    document.body.removeChild(ta);
+    return ok;
+  }
+  function flash(label){
+    copy.textContent=label;
+    clearTimeout(copyTimer);
+    copyTimer=setTimeout(function(){copy.textContent="Copy email";},2500);
+  }
+  function succeeded(){flash("Copied");}
+  function failed(){selectMail();flash("Press Ctrl+C to copy");}
+  copy.addEventListener("click",function(){
+    var text=mail.textContent.trim();
+    if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext){
+      navigator.clipboard.writeText(text).then(succeeded,function(){legacyCopy(text)?succeeded():failed();});
+    }else{
+      legacyCopy(text)?succeeded():failed();
+    }
+  });
+
+  /* Count-up for headline figures */
+  var counters=[].slice.call(document.querySelectorAll("[data-count]"));
+  if(!reduce&&"IntersectionObserver" in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(!en.isIntersecting)return;
+        io.unobserve(en.target);
+        var el=en.target,end=+el.dataset.count,t0=null,dur=1400;
+        function tick(t){
+          if(t0===null)t0=t;
+          var p=Math.min(1,(t-t0)/dur),e=1-Math.pow(1-p,3);
+          el.textContent=Math.round(end*e).toLocaleString("en-US");
+          if(p<1)requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      });
+    },{threshold:.6});
+    counters.forEach(function(c){io.observe(c);});
+  }
+
+  /* Hero: the data check plays once on load, and again on request */
+  var rows=[].slice.call(document.querySelectorAll("#rows .row"));
+  var msg=document.getElementById("recon-msg"),replay=document.getElementById("replay");
+  var finalMsg="Rechecked after the correction: 6 of 6 rows match.";
+  var run=0;
+  function sleep(ms){return new Promise(function(r){setTimeout(r,ms);});}
+  function set(row,state,val){
+    row.dataset.state=state;
+    if(val)row.querySelector(".r").textContent=val;
+  }
+  function showFinal(){
+    rows.forEach(function(r){set(r,"ok",r.dataset.final);});
+    msg.textContent=finalMsg;
+  }
+  async function play(){
+    var id=++run;
+    function live(){return id===run;}
+    replay.disabled=true;
+    rows.forEach(function(r){set(r,"wait",r.dataset.bad||r.dataset.final);});
+    msg.textContent="Comparing 6 rows";
+    await sleep(500);
+    for(var i=0;i<rows.length;i++){
+      if(!live())return;
+      var r=rows[i];
+      set(r,"check");
+      msg.textContent="Comparing row "+(i+1)+" of "+rows.length;
+      await sleep(380);
+      if(!live())return;
+      set(r,r.dataset.bad?"flag":"ok");
+    }
+    msg.textContent="2 of 6 rows differ. The report shows East as 7,724 instead of 7,742, which also leaves Total 18 short.";
+    await sleep(2600);
+    if(!live())return;
+    rows.forEach(function(r){set(r,"check",r.dataset.final);});
+    msg.textContent="Correcting the East figure and checking again";
+    await sleep(1100);
+    for(var j=0;j<rows.length;j++){
+      if(!live())return;
+      set(rows[j],"ok");
+      await sleep(140);
+    }
+    msg.textContent=finalMsg;
+    replay.disabled=false;
+  }
+  replay.addEventListener("click",function(){if(reduce){showFinal();}else{play();}});
+  if(!reduce)play();
+})();
+</script>
+</body>
+</html>
